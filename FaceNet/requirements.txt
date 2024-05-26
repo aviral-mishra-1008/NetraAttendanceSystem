@@ -1,0 +1,10 @@
+pandas 
+cv2
+numpy
+os
+pickle
+tensorflow
+keras-facenet
+matplotlib
+tensorflow-hub
+gdown
