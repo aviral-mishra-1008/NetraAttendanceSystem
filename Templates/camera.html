@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+
+
+{%block body%}
+<div class="py-10 px-10"> 
+    <p class="text-3xl font-bold"> <a href="/"> Professor Portal </a> </p>
+</div>
+
+{%if user.is_authenticated%}
+<div class="px-8 py-8 w-1/2">
+    <form action="/attendance/" method="POST">
+        {%csrf_token%}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Subject</label>
+            <input name="subject" placeholder="Chemistry..." type="text" class="form-control" id="exampleInputID" aria-describedby="emailHelp">
+        </div>
+
+    <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Year</label>
+            <input name="year" placeholder="Batch 2026.." type="text" class="form-control" id="exampleInputID" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Section</label>
+            <input placeholder="A or B or C.."  type="text" class="form-control" id="section" name="section">
+        </div> 
+        <button class="px-1 py-1 border-dotted border-2 border-yellow-500 rounded-md hover:bg-yellow-500" type="submit"> Run Attendance </a> </button>
+    </form> 
+</div>
+</div>
+
+{%endif%}
+
+<div class="fixed bottom-10 left-10">
+    <p> Made with ❤️ by Team Tails UVAS</a> </p>
+    </div>
+
+
+
+
+{%endblock%}

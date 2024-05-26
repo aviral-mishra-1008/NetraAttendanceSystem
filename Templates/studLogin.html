@@ -1,0 +1,40 @@
+{%extends "base.html"%}
+{%block body%}
+<div class="py-10 px-10"> 
+    <p class="text-3xl font-bold"> <a href="/">  Student Portal  </a> </p>
+</div>
+
+
+<div class="px-10 py-[2%] flex flex-row justify-around">
+
+    <div>
+        <p class="text-xl py-6"> Log-In </p>
+        <form action="\profLogin" method="POST">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <button type="submit" class="btn btn-outline-warning">Submit</button>
+        </form> 
+    </div>
+
+    <div>
+        <p class="text-xl py-6"> Sign-Up </p>
+        <form action="\profLogin" method="POST">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <button type="submit" class="btn btn-outline-warning">Submit</button>
+        </form> 
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,47 @@
+{%extends "base.html"%}
+{%block body%}
+<div class="py-10 px-10 "> 
+    <p class="text-3xl font-bold"> <a href="/"> Professor Portal </a> </p>
+</div>
+
+<div class="px-8 py-8 ">
+<div class="px-8 py-8 border-2 border-dotted rounded-md border-yellow-500 w-1/2">
+    <p class="text-xl py-6 font-bold"> Sign-Up </p>
+    <form action="/profRegister/" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address:  </label>
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" Required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id" class="form-label">ID Number:  </label>
+            <input type="Number" class="form-control" id="IDNum" name="IDNum" aria-describedby="IDHelp" Required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id" class="form-label">First Name:  </label>
+            <input type="text" class="form-control" id="fname" name="fname" aria-describedby="fNameHelp" Required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id" class="form-label">Last Name:  </label>
+            <input type="text" class="form-control" id="lname" name="lname" aria-describedby="lNameHelp" Required>
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password:  </label>
+            <input type="password" class="form-control" id="pass1" name="pass1" aria-describedby="passHelp">
+
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Re-Enter Password:  </label>
+            <input type="password" class="form-control" id="pass2" name="pass2" aria-describedby="passHelp">
+        </div> 
+
+        <button type="submit" class="btn btn-outline-warning">Submit</button>
+    </form> 
+</div>
+</div>
+{%endblock%}
