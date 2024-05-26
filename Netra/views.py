@@ -12,6 +12,8 @@ import pickle
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from .models import *
+import datetime
+import pandas as pd
 # Create your views here.
 
 globalSubjectCount = 0
@@ -137,6 +139,9 @@ def BeginCameraFeed(request):
             detector = cv2.CascadeClassifier('A:\FaceNet Extension\AttendanceSystem\FaceNet\haarcascade_frontalface_default.xml')
             model = Embed_model()
             cap = cv2.VideoCapture(0)
+
+            date = datetime.date.today()
+
             while True:
                 ret, frame = cap.read()
                 if not ret:
@@ -166,6 +171,14 @@ def BeginCameraFeed(request):
 
                 cv2.putText(frame, predicted_class_name.upper(), (x, y - 10), cv2.FONT_HERSHEY_PLAIN, 1, (255, 0, 0), 2)
 
+                #Marking Attendance
+                df = pd.read_csv("Attendance Record\\"+year+"\\"+section+".csv")
+                cols = df.columns
+                if predicted_class_name in df.Roll:
+                    
+
+                if date not in cols:
+                    df.insert(len(cols)-1,str(date),True)
 
             
                 cv2.imshow('Webcam Feed', frame)
@@ -188,10 +201,32 @@ def Subjects(request):
             subject = request.POST.get('subjectName')
             year = request.POST.get('year')
             section = request.POST.get('section')
-            netSubj = subject.capitalize()+','+year+','+section.upper()
             Prof = Professor.objects.filter(user=request.user)
             Prof=Prof[0]
-            Prof.subjects = Prof.subjects+netSubj
+            subject = Prof.subjects
+
+            if subject!='':
+                l = subject.split(',')
+                pt1 = 0
+                pt2 = 0
+                for i in range(len(l)):
+                    if(l[i][0]=='2' and pt1==0):
+                        pt1=i
+                    
+                    if(len(l[i])==1):
+                        pt2=i
+                        break
+                
+                l.insert(pt1-1,subject)
+                l.insert(pt2-1,year)
+                l.insert(len(l)-1,section)
+                subj = l.join(',')
+                Prof.subjects = subj
+            
+            else:
+                subj = subject+','+year+','+section
+                Prof.subjects = subj
+                        
             Prof.save()
             messages.success(request,"Subjects Registered!")
             return render(request,"attendancePortal.html")
@@ -200,3 +235,7 @@ def Subjects(request):
     else:
         messages.error(request, "Please LogIn First!!")
         return redirect("/profLogin/")
+
+
+def makeEmbed(request):
+    return render(request,"makeEmbeds.html")

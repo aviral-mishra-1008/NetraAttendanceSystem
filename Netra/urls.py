@@ -12,5 +12,5 @@ urlpatterns = [
     path('attendance/',views.BeginCameraFeed,name='BegincameraFeed'),
     path('attendance/',views.BeginCameraFeed,name='BegincameraFeed'),
     path('registerSubjects/',views.Subjects, name="Subject"),
-
+    path('addStudent/',views.makeEmbed, name="addStudent"),
 ]
