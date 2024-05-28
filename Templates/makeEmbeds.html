@@ -1,20 +1,80 @@
 {%extends "base.html"%}
-{%if user.is_authenticated%}
 {%block body%}
 <div class="py-10 px-10"> 
-    <p class="text-3xl font-bold"> <a href="/"> Professor Portal </a> </p>
-</div>
+{%block head%}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{%endblock%}
 
+<div> Welcome To Embed Generator </div>
+<form action="/addStudent/" method="post">
+    {% csrf_token %}
 <div class="px-8 py-8">
+    <label for="name">Enter Name : </label>
+    <font color = "black"> <input type="text" id="name" name="name" required></font>
+    <br>
+    <br>
+
+    <label for="regNo">Enter Registration Number: </label>
+    <font color = "black"> <input type="text" id="regNo" name="regNo" required></font>
+    <br>
+    <br>
+
+    <label for="year">Year: </label>
+    <font color = "black"> <input type="text" id="year" name="year" required readonly></font>
+    <br>
+    <br>
+
+    <label for="section">Section: </label>
+    <font color = "black"> <input type="text" id="section" name="section" required readonly></font>
+    <br>
+    <br>
+
+
+    <label for="image">Face Data</label>
+    <font color = "black"> <input type="text" id="image" name="image" required readonly></font>
+<br>
+<br>
+    <label for="image">Last Student</label>
+    <font color = "black"> <input type="radio" id="isLast" name="isLast" required readonly></font>
+<br>
+
+<button type="submit" class="mt-2 rounded-md border-2 border-yellow-500 px-1 py-1 border-dotted">Submit</button>
+</div>
+</form>
+
+<div id="container">
+    <video id="video" width="200" height="200" autoplay> </video>
+    <button class="btn btn-outline-warning" onclick="capture()"> Capture </button> <br> <br> 
+    <canvas id="canvas" style ="overflow:auto"></canvas>
 
 </div> 
 
-<div class="fixed bottom-10 left-10">
-    <p> Made with ❤️ by Team <a href="/">Tails UVAS</a> </p>
-    </div>
-
 
 <script>
+
+    let video = document.querySelector("#video")
+    if(navigator.mediaDevices.getUserMedia){
+        navigator.mediaDevices.getUserMedia({
+            video:true
+        })
+        .then((stream) => {
+            video.srcObject = stream
+        })
+    }
+
+    function capture(){
+        let canvas = document.getElementById('canvas')
+        let video = document.getElementById('video')
+
+        canvas.width = 200
+        canvas.height = 200
+        canvas.getContext('2d').drawImage(video,0,0,200,200)
+        let x = canvas.toDataURL()
+        const inputField = document.getElementById('image')
+        image.value = x;
+        
+    }
 </script>
+
 {%endblock%}
-{%endif%}

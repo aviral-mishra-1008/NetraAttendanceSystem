@@ -1,40 +1,31 @@
 {%extends "base.html"%}
 {%block body%}
 <div class="py-10 px-10"> 
-    <p class="text-3xl font-bold"> <a href="/">  Student Portal  </a> </p>
+    <p class="text-3xl font-bold"> <a href="/"> Student Portal </a> </p>
 </div>
 
 
-<div class="px-10 py-[2%] flex flex-row justify-around">
+<div class="px-8 py-[2%] flex flex-auto justify-center">
 
-    <div>
-        <p class="text-xl py-6"> Log-In </p>
-        <form action="\profLogin" method="POST">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <div class="px-8 py-8 border-2 border-dotted rounded-md border-yellow-500">
+        <p class="text-xl font-bold py-6"> Log-In </p>
+        <form action="/studLogin/" method="POST">
+            {%csrf_token%}
+        <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">User ID</label>
+                <input name="username" placeholder="User ID" type="number" class="form-control" id="exampleInputID" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-            </div>
+                <input placeholder="Enter Your Password"  type="password" class="form-control" id="pass1" name="pass1">
+            </div> 
             <button type="submit" class="btn btn-outline-warning">Submit</button>
         </form> 
+       <a href="/studRegister/"> <button class="border-2 border-dotted border-indigo-400 rounded-md px-1 hover:bg-indigo-500">Not Registered? Click Here!</button> </a>
+
     </div>
 
-    <div>
-        <p class="text-xl py-6"> Sign-Up </p>
-        <form action="\profLogin" method="POST">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <button type="submit" class="btn btn-outline-warning">Submit</button>
-        </form> 
-    </div>
+    <div> </div>
 </div>
+
 {%endblock%}

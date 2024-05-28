@@ -1,6 +1,8 @@
 {%extends "base.html"%}
-{%if user.is_authenticated%}
+
 {%block body%}
+{%if user.is_authenticated%}
+{%if user.is_staff%}
 <div class="py-10 px-10"> 
     <p class="text-3xl font-bold"> <a href="/"> Professor Portal </a> </p>
 </div>
@@ -9,16 +11,18 @@
 <div class="border-2 border-dotted rounded-md border-white py-2 px-2">
 <center>
 <div class="px-8 py-8"> <a href="/registerSubjects/"> <button class="btn btn-outline-warning"> Register Subjects </button> </a> </div>
-<div class="px-8 py-8"> <a href="/addStudent/"> <button class="btn btn-outline-warning"> Embed Students </button> </a> </div>
+<div class="px-8 py-8"> <a href="/countStudent/"> <button class="btn btn-outline-warning"> Embed Students </button> </a> </div>
 <div class="px-8 py-8"> <a href="/camera/"> <button class="btn btn-outline-warning"> Take Attendance </button> </a> </div>
 </center>
 </div>
 </div>
-    
+{%endif%}
+{%endif%}
 <div class="fixed bottom-10 left-10">
     <p> Made with ❤️ by Team <a href="/">Tails UVAS</a> </p>
     </div>
 {%endblock%}
-{%endif%}
+
+
 
 

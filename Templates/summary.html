@@ -1,0 +1,46 @@
+{%extends "base.html"%}
+{%if display%}
+{%block body%}
+<div class="py-10 px-10"> 
+    <p class="text-3xl font-bold"> <a href="/"> Professor Portal </a> </p>
+</div>
+
+{%if user.is_authenticated%}
+{%if user.is_staff%}
+<div>
+<p class="text-3xl p-8"> Attendance Summary </p>
+</div>
+
+<div class="flex flex-auto justify-start m-4">
+<div class="border-2 border-yellow-500 border-dotted px-2 py-4 rounded-md">
+
+<div class="mx-4">
+    <div class="flex flex-auto justify-start">
+     <div class="px-2 ">  <p class="font-white"> <u> Reg No </u> </p> </div>
+     <div class="px-2">  <p class="font-white"> <u> Status </u> </p> </div>
+</div>
+</div>
+    
+{%for i in summary%}
+    <div class="mx-4">
+        <div class="flex flex-auto justify-start">
+         <div class="px-2 border-2  border-yellow-500">  <p class="font-white"> {{i.name}} </p> </div>
+         <div class="px-2 border-2  border-yellow-500 ">  <p class="font-white"> {{i.status}} </p> </div>
+    </div>
+</div>
+{%endfor%}
+
+    
+</div>
+</div>
+{%endif%}
+{%endif%}
+{%endif%}
+<div>
+    <p class="text-xl p-8"> Thanks For Using Netra.AI ❤️ </p>
+    </div>
+
+{%endblock%}
+
+
+

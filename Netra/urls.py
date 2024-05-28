@@ -13,4 +13,8 @@ urlpatterns = [
     path('attendance/',views.BeginCameraFeed,name='BegincameraFeed'),
     path('registerSubjects/',views.Subjects, name="Subject"),
     path('addStudent/',views.makeEmbed, name="addStudent"),
+    path('studLogin/',views.studLogin,name="studLogin"),
+    path('studRegister/',views.studRegistration,name="studRegister"),
+    path('percent/',views.percent,name="percent"),
+    path('countStudent/',views.counts, name='count')
 ]

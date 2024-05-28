@@ -1,0 +1,29 @@
+{%extends 'base.html'%}
+{%block body%}
+<div class="py-10 px-10"> 
+    <p class="text-3xl font-bold"> <a href="/"> Student Portal </a> </p>
+</div>
+
+<div class = "m-8">
+<p> Hi! {{user.first_name}} </p>
+<p> The Attendance Record For You Is As Follows: </p>
+</div>
+
+<div class="flex flex-row   m-4">
+{%for i in Attendance%}
+<div class="p-4 m-4">
+    <div>
+        {{i.subject}}
+    </div>
+
+    <div>
+        {{i.percentage}}%
+    </div>
+</div>
+{%endfor%}
+<div>
+
+
+
+
+{%endblock%}

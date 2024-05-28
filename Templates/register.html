@@ -1,10 +1,12 @@
 {%extends "base.html"%}
-{%if user.is_authenticated%}
+
 {%block body%}
 <div class="py-10 px-10"> 
     <p class="text-3xl font-bold"> <a href="/"> Professor Portal </a> </p>
 </div>
 
+{%if user.is_authenticated%}
+{%if user.is_staff%}
 
 <form action="/registerSubjects/" method="post">
     {% csrf_token %}
@@ -26,11 +28,14 @@
 </div>
 </form>
 
+{%endif%}
+{%endif%}
+
 <div class="fixed bottom-10 left-10">
     <p> Made with ❤️ by Team <a href="/">Tails UVAS</a> </p>
     </div>
 
 
 {%endblock%}
-{%endif%}
+
 

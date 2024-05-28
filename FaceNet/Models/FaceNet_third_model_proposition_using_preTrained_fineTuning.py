@@ -83,7 +83,7 @@ class Embed_model:
         return K.mean(K.abs (probs [0]) + K.abs (1.0 - probs [1]))
     
     def __new__(self,summary=False):
-        model = load_model('A:\FaceNet Extension\AttendanceSystem\FaceNet\Facenet_TL_ep10',custom_objects={'triplet_loss': self.triplet_loss}) #specify path to folder having SavedModel File
+        model = load_model('A:\\FaceNet Extension\\Netra_Attendance_System\\FaceNet\\Facenet_TL_ep10',custom_objects={'triplet_loss': self.triplet_loss}) #specify path to folder having SavedModel File
         single_image_input = layers.Input(shape=(160, 160, 3), name='single_image_input')
         embedding_output = model.layers[3](single_image_input)
         inference_model = Model(inputs = single_image_input, outputs = embedding_output)
