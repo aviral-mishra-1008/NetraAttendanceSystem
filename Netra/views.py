@@ -71,17 +71,19 @@ def prof(request):
                     messages.error(request, "Passwords Didn't Match, Try Again!")
                     return redirect("/")
 
-            with open("Admin Details\\dummy-prof_details.pkl",'rb') as f:
+            
+            with open("Admin Details\\dummy-prof_details.pkl",'rb+') as f:
                 valid_users = pickle.load(f)
                 legal = False
 
-                for i in valid_users:
-                    (Id, registered) = i
+                for i in range(len(valid_users)):
+                    (Id, registered) = valid_users[i]
 
                     if not registered:
-                        print("not registered and Id: ",Id, type(username))
                         if Id==username:
                             legal=True
+                            valid_users[i][1] = True
+                            pickle.dump(valid_users,f)
                             break
                     
                     if registered and Id==username:
@@ -93,7 +95,12 @@ def prof(request):
                     return redirect("/")
                 
                 else:
-                    professor = User.objects._create_user(username,email,pass1)
+                    try:
+                        professor = User.objects._create_user(username,email,pass1)
+                    
+                    except:
+                        messages.error(request,"You have already registered!! Sign-In Instead")
+                        return redirect("/profLogin")
                     professor.is_staff = True
                     professor.first_name = fname
                     professor.last_name = lname
@@ -476,16 +483,19 @@ def studRegistration(request):
                     messages.error(request, "Passwords Didn't Match, Try Again!")
                     return redirect("/")
 
-            with open("Admin Details\\dummy-student_details.pkl",'rb') as f:
+            with open("Admin Details\\dummy-student_details.pkl",'rb+') as f:
                 valid_users = pickle.load(f)
                 legal = False
 
-                for i in valid_users:
-                    (Id, registered) = i
+                for i in range(len(valid_users)):
+                    (Id, registered) = valid_users[i]
+                    
 
                     if not registered:
                         if Id==username:
                             legal=True
+                            valid_users[i][1] = True
+                            pickle.dump(valid_users,f)
                             break
                     
                     if registered and Id==username:
@@ -497,7 +507,11 @@ def studRegistration(request):
                     return redirect("/")
                 
                 else:
-                    student = User.objects.create_user(username,email,pass1)
+                    try:
+                        student = User.objects.create_user(username,email,pass1)
+                    except:
+                        messages.error(request,"You Have Already Been Registered! Please Sign In Instead!")
+                        return redirect("/studLogin")
                     student.first_name = fname
                     student.last_name = lname
                     student.save()
@@ -546,3 +560,62 @@ def Logout(request):
     x = logout(request)
     messages.success(request,"Successfully Logged Out!")
     return redirect("/")
+
+def adminView(request):
+    if request.method=="POST":
+        role = request.POST.get("role")
+        csv_file = request.FILES['csvFile']
+        with open('temp/' + csv_file.name, 'wb') as destination:
+            for chunk in csv_file.chunks():
+                destination.write(chunk)
+        
+        df = pd.read_csv("temp\\"+csv_file.name)
+
+        newUsers = []
+        checks = []
+
+        if(role.lower()=="professor"):
+            updPath = "Admin Details"+"\\"+"dummy-prof_details.pkl"
+        
+        elif(role.lower()=="student"):
+            updPath = "Admin Details"+"\\"+"dummy-student_details.pkl"
+        
+        
+        with open(updPath,"rb+") as f:
+            data = pickle.load(f)
+            if(len(data)!=0):
+                for i in data:
+                    if i[1]!=True:
+                        newUsers.append(i)
+                        checks.append(i[0])
+                
+                for i in df["ID"]:
+                    if i in checks:
+                        continue
+                    newUsers.append([i,False])
+            
+            pickle.dump(newUsers,f)
+        
+        os.remove("temp\\"+csv_file.name)
+        
+        messages.success(request,"New Details Added!!")
+        return redirect("/")
+
+    return render(request,"admin.html")
+
+def adminLogin(request):
+    if request.method == "POST":
+        username = request.POST.get("name")
+        password = request.POST.get("password")
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request,user)
+            messages.success(request,"Logged-In!")
+            return redirect("/adminView/")
+        
+        else:
+            messages.error(request,"INCORRECT CREDENTIALS!!")
+            return redirect("/adminView/")
+
+    return render(request,"admin.html")

@@ -6,48 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {%endblock%}
 
-<div> Welcome To Embed Generator </div>
+<div class="p-8"> <p class="text-2xl font-bold">Embed Generator </div>
 
 {%if user.is_staff%}
 
+
+<div class="flex flex-auto justify-left">
 <form action="/addStudent/" method="post">
     {% csrf_token %}
 <div class="px-8 py-8">
-    <label for="regNo">Enter Registration Number: </label>
-    <font color = "black"> <input type="text" id="regNo" name="regNo" required></font>
-    <br>
-    <br>
+    <div class="flex flex-auto">
 
-    <label for="year">Year: </label>
-    <font color = "black"> <input type="text" id="year" name="year" value={{year}} required readonly></font>
+        <div>
+    <label class="m-1" for="regNo">Registration_Number: </label>
     <br>
+    <label class="m-1" for="year">Year: </label>
     <br>
-
-    <label for="section">Section: </label>
-    <font color = "black"> <input type="text" id="section" value={{section}} name="section" required readonly></font>
+    <label class="m-1" for="section">Section: </label>
     <br>
+    <label class="m-1" for="count">CurrentCount: </label>
     <br>
-
-    <label for="count">Current Count: </label>
-    <font color = "black"> <input type="text" id="count" name="count" value={{count}} required readonly></font>
-    <br>
-    <br>
+    <label class="m-1" for="image">FaceData</label>
+        </div>
 
 
-    <label for="image">Face Data</label>
-    <font color = "black"> <input type="text" id="image" name="image" required readonly></font>
+        <div>
+    <font color = "black"> <input class="m-1" type="text" id="regNo" name="regNo" required></font>
+    <br>
+    <font color = "black"> <input class="m-1" type="text" id="year" name="year" value={{year}} required readonly></font>
+    <br>
+    <font color = "black"> <input class="m-1" type="text" id="section" value={{section}} name="section" required readonly></font>
+    <br>
+    <font color = "black"> <input class="m-1" type="text" id="count" name="count" value={{count}} required readonly></font>
+    <br>
+    <font color = "black"> <input class="m-1" type="text" id="image" name="image" required readonly></font>
+        </div>
+        
 <br>
-<button type="submit" class="mt-2 rounded-md border-2 border-yellow-500 px-1 py-1 border-dotted">Submit</button>
+</div>
+
+<button type="submit" class="mt-2 rounded-md border-2 border-yellow-500 px-1 py-1 border-dotted">
+    Submit
+</button>
 </div>
 </form>
 
-<div id="container">
-    <video id="video" width="300" height="200" autoplay> </video>
-    <button class="btn btn-outline-warning" onclick="capture()"> Capture </button> <br> <br> 
-    <canvas id="canvas" style ="overflow:auto"></canvas>
+<div id="container" class="px-4">
 
+    <div class="p-1">
+    <video id="video" width="300" height="200" autoplay> </video>
+    </div>
+
+    <div class="p-1">
+    <button class="btn btn-outline-warning" onclick="capture()"> Capture </button> 
+        <br> <br> 
+    </div>
+
+    <div class="p-1">
+    <canvas id="canvas" style ="overflow:auto"></canvas>
+    </div>
 </div> 
 
+</div>
 
 <script>
 

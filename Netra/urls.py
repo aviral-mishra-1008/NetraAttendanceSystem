@@ -16,5 +16,7 @@ urlpatterns = [
     path('studRegister/',views.studRegistration,name="studRegister"),
     path('percent/',views.percent,name="percent"),
     path('logout/',views.Logout,name="logout"),
+    path('adminView/',views.adminView,name="adminView"),
+    path('adminLogin/',views.adminLogin,name="adminLogin"),
     path('countStudent/',views.counts, name='count')
 ]

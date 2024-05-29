@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{%block body%}
+
+<style>
+input{
+    color:black
+}
+</style>
+
+{%if user.is_superuser%}
+
+<p class="underline decoration-dashed decoration-green-500 px-4 py-2 text-xl font-bold"> Welcome Admin! Please Provide Role and File Containing New Legal User IDs </p>
+<form action="/adminView/" enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <div class="px-4 pt-8">
+    <label> Role: </label>
+    <input type = "text" name="role" id="role">
+    </div>
+
+    <br>
+
+    <div class="px-4">
+    <label> CSV File For Updating Record (max size 2.5 mB) </label>
+    <input type="file" name="csvFile" accept=".csv"> 
+    </div>
+    <button type="submit" class="btn btn-outline-warning mx-4 my-2"> Submit </button>
+
+
+    <p class="p-4"> Make sure that there is only one column in file with heading as (ID in Capital Letter) </p>
+</form>
+
+{%else%}
+
+
+<div class="p-4">
+
+    <p class="my-4 text-xl"> Please Login First (As Super User Of This Site) </p>
+
+<form action="/adminLogin/" method="POST">
+    {% csrf_token %}
+    <div>
+    <label> Username: </label>
+    <input type = "text" name="name" id="name">
+    </div>
+
+    <br>
+
+    <div>
+    <label> Password: </label>
+    <input type="password"  name="password" id="password"> 
+    </div>
+
+    <button type="submit" class="btn btn-outline-warning my-4"> Submit </button>
+</form>
+
+</div>
+
+
+{%endif%}
+
+{%endblock%}
