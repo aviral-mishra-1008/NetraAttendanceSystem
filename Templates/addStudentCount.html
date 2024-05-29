@@ -6,7 +6,15 @@
 {%if user.is_authenticated%}
 {%if user.is_staff%}
 
-<form action="/addStudent/" method="post">
+
+<style>
+input{
+        color:black;
+    }
+</style>
+    
+
+<form action="/countStudent/" method="post">
     {% csrf_token %}
 <div class=" flex flex-auto px-8 py-8">
     <div class="px-4"> 
@@ -18,11 +26,11 @@
     </div>
 
     <div>
-    <font color = "black"> <input type="text"  class = "my-1" id="year" name="year" required readonly></font>
+    <font color = "black"> <input type="text"  class = "my-1" id="year" name="year" required></font>
     <br>
-    <font color = "black"> <input type="text" class = "my-1" id="section" name="section" required readonly></font>
+    <font color = "black"> <input type="text" class = "my-1" id="section" name="section" required></font>
     <br>
-    <font color = "black"> <input type="number" class = "my-1" id="count" name="count" required readonly></font>
+    <font color = "black"> <input type="number" class = "my-1" id="count" name="count" required></font>
     </div>
 </div>
 

@@ -11,20 +11,42 @@
 <form action="/registerSubjects/" method="post">
     {% csrf_token %}
 <div class="px-8 py-8">
-    <label for="subjectName">Enter Subject (separated by comma):</label>
-    <font color = "black"> <input type="text" id="subjectName" name="subjectName" required></font>
-    <br>
-    <br>
 
-    <label for="year">Enter Year (separated by comma):</label>
-    <font color = "black"> <input type="text" id="year" name="year" required></font>
-    <br>
-    <br>
+<div class="flex flex-auto px-2 m-1">
+<div>
+    <label for="subjectName" class="px-2">Enter Subject (separated by comma):</label>
+</div>
+<div>
+    <font color = "black"> <input type="text" class="px-2" id="subjectName" name="subjectName" required></font>
+</div>
+</div>
 
-    <label for="section">Enter Section (separated by comma):</label>
-    <font color = "black"> <input type="text" id="section" name="section" required></font>
 <br>
-<button type="submit" class="mt-2 rounded-md border-2 border-yellow-500 px-1 py-1 border-dotted">Submit</button>
+
+<div class="flex flex-auto px-2 m-1">
+<div>
+    <label for="year" class="px-2">Enter Year (separated by comma):</label>
+</div>
+<div>
+    <font color = "black"> <input type="text" class="px-2" id="year" name="year" required></font>
+</div>
+</div>
+
+<br>
+
+<div class="flex flex-auto px-2 m-1">
+<div>
+    <label for="section" class="px-2">Enter Section (separated by comma):</label>
+</div>
+<div>
+    <font color = "black"> <input type="text" class="px-2" id="section" name="section" required></font>
+</div>
+</div>
+
+<div class="px-4 py-2">
+<button type="submit" class="mt-2 rounded-md border-2 border-yellow-500 px-1 py-1 border-dotted hover:bg-yellow-500">Submit</button>
+</div>
+
 </div>
 </form>
 

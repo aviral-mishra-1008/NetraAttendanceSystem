@@ -1,5 +1,7 @@
 {%extends 'base.html'%}
 {%block body%}
+
+{%if not user.is_staff%}
 <div class="py-10 px-10"> 
     <p class="text-3xl font-bold"> <a href="/"> Student Portal </a> </p>
 </div>
@@ -25,5 +27,5 @@
 
 
 
-
+{%endif%}
 {%endblock%}

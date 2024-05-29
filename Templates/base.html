@@ -2,8 +2,6 @@
 <head>  {%block head%} {%endblock%} 
 
 <title> {%block title%} Netra {%endblock%}</title>
-
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +10,48 @@
 </head>
 
 <body class="bg-[#1C0905]">
+
     <font color="white">
+
+        <nav
+          class="flex justify-between px-20 py-10 items-center bg-[#210C08]  h-[25px] w-[100%]"
+        >
+          <div class="flex items-center">
+            <ul class="flex items-center space-x-6">
+              <li class="font-semibold text-gray-200"> <a href='/'>Home</a></li>
+
+              {%if user.is_authenticated%}
+
+              {%if user.is_staff%}
+              <li class="font-semibold text-gray-200"><a href='/registerSubjects'>Register Subjects</a></li>
+              <li class="font-semibold text-gray-200"><a href='/countStudent'>Add Student</a></li>
+              <li class="font-semibold text-gray-200"><a href='/camera'>Take Attendance</a></li>
+              {%endif%}
+
+              {%if not user.is_staff%}
+              <li class="font-semibold text-gray-200"><a href='/percent'>Check Attendance Percentage</a></li>
+              {%endif%}
+              {%endif%}
+              </li>
+            </ul>
+          </div>
+
+          {%if user.is_authenticated%}
+          <div> 
+           <p class="text-sm text-slate-500"> User {{user.username}} </p> 
+          </div>
+          {%endif%}
+
+          <div>
+            {%if user.is_authenticated%}
+                <div>
+          <a href="/logout/">  <button class="btn btn-outline-success hover:text-"> LogOut </button> </a>
+                </div>
+            </div>
+            {%endif%}
+          </div>
+        </nav>
+
 
         {% for message in messages%}
 
@@ -28,8 +67,5 @@
 
     {%block body%} {%endblock%}
     </font>
-
-
-        
 </body>
 </html>
