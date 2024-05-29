@@ -15,7 +15,7 @@ from pathlib import Path
 import pandas as pd
 import shutil
 import os
-# Create your views here.
+
 
 branchGroupData = {'A':'CSE','B':'CSE','C':'CSE','D':'CSE','E':'ECE','F':'ECE','N':'EE','H':'ME','G':'ME','I':'CE','J':'CE','K':'CHE','L':'BT','M':'PIE'}
 branch = ['CSE','ECE','EE','ME','PIE','CE','CHE','BT']
