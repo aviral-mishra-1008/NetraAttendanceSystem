@@ -19,6 +19,7 @@ import dotenv
 import smtplib
 # Create your views here.
 
+
 #Loading env
 dotenv.load_dotenv()
 
