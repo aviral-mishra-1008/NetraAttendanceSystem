@@ -7,8 +7,7 @@
 <div class="px-8 py-8 ">
 <div class="px-8 py-8 border-2 border-dotted rounded-md border-yellow-500 w-1/2">
     <p class="text-xl py-6 font-bold"> Sign-Up </p>
-    <form action="/profRegister/" method="POST">
-        {% csrf_token %}
+    <form action="/profRegister/" method="POST"> {% csrf_token %}
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address:  </label>
             <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" Required>

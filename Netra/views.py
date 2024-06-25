@@ -14,8 +14,15 @@ import base64
 from pathlib import Path
 import pandas as pd
 import shutil
+import os
+import dotenv
+import smtplib
 # Create your views here.
 
+#Loading env
+dotenv.load_dotenv()
+
+#Generic Global Content
 branchGroupData = {'A':'CSE','B':'CSE','C':'CSE','D':'CSE','E':'ECE','F':'ECE','N':'EE','H':'ME','G':'ME','I':'CE','J':'CE','K':'CHE','L':'BT','M':'PIE'}
 branch = ['CSE','ECE','EE','ME','PIE','CE','CHE','BT']
 class Summary:
@@ -27,6 +34,9 @@ class Attendance:
     def __init__(self,subject="",percentage=0):
         self.subject= subject
         self.percentage = percentage
+    
+
+#Views
 
 def home(request):
     date = datetime.date.today()
@@ -55,6 +65,56 @@ def home(request):
             
             if str(year+i) not in yearListE:
                 os.mkdir(os.path.join("Embeds",str(year+i)))
+            
+        #Sending out the monthly attendance record to all students on 1st day of each month 
+
+        if date.day == 1 and (date.month!=6 or date.month!=7):
+            email = os.environ.get("USER-NAME")
+            password = os.environ.get("PASS")
+            students = Student.objects.all()
+                        
+        
+            s = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+            s.starttls  # Enable TLS encryption
+            s.login(emailId, password)
+
+            for i in students:
+                emailId = ".".join((i.user.fname,str(i.username)))+"@mnnit.ac.in"
+            
+            #collecting attendance of all subjects as list of tuples (subject name, percent attendance)
+                attendance_path = os.path.join("Attendance Record",i.year,branchGroupData[i.section],i.section)
+                subject_list = os.listdir(attendance_path)
+                attendanceMasterRecord = []
+                for j in subject_list:
+                    df = pd.read_csv(os.path.join(attendance_path,j))
+                    count = 0
+                    present = 0
+                    index = 0
+                    record = df.to_numpy()
+                    for k in range(len(record)):
+                        if(record[k][0]==int(i.username)):
+                            index = k
+                            break
+                    
+                    for k in range(len(record[0])):
+                        value = record[index][k]
+                        if value=='p':
+                            present+=1
+                        count+=1
+
+                    attendance_record =  Attendance(j[:len(j)-4],round((present/count)*100,2))
+                    attendanceMasterRecord.append((j,attendance_record))
+
+                    subject = 'Here Is Your Monthly Attendance Record!'
+                    mess = f"Hi! {i.user.fname} your monthly attendance record is here: \n"
+                    for attend in attendanceMasterRecord:
+                        mess+=f"{attend[0]} : {attend[1]}% \n"
+                    mess+="From Netra Team, for any further clarifications please contact webadmin@netraAi.com"
+
+                    message = "Subject: {}\n\n{}".format(subject,mess)
+                    s.sendmail(emailId,email,message)
+                
+                s.quit()
 
     return render(request,'home.html')
 
@@ -108,6 +168,20 @@ def prof(request):
                     prof = Professor(user=professor,username=username, role="professor");
                     prof.save()
                     messages.success(request,"We Have Verified Your Request, Account Creation Successful!")
+
+                    
+                    emailid = os.environ.get("USER-NAME")
+                    password = os.environ.get("PASS")
+
+                    server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+                    server.starttls  # Enable TLS encryption
+                    server.login(emailid, password)
+                    subject = 'Success!!'
+                    content = f"Hi! {fname} you have been successfully registered!"
+                    message = "Subject: {}\n\n{}".format(subject,content)
+                    server.sendmail(emailid,email,message)
+                    server.quit()
+
                     return redirect("/")
                 
         
@@ -171,7 +245,7 @@ def BeginCameraFeed(request):
                     pt1+=1
                     pt2+=1
 
-                print(subj,subject)
+                # print(subj,subject)
                 if subj not in subjList:
                     messages.error(request,"Sorry! You Don't Have This Subject Registered!")
                     return redirect('/')
@@ -196,7 +270,7 @@ def BeginCameraFeed(request):
 
 
                 if str(date) not in cols:
-                    print(True)
+                    # print(True)
                     df.insert(len(cols),str(date),np.NaN)
                 
                 rolls = []
@@ -289,12 +363,12 @@ def Subjects(request):
                     pt1 = 0
                     pt2 = 0
                     for i in range(len(l)):
-                        print(l[i][0]=="2" and pt1==0)
+                        # print(l[i][0]=="2" and pt1==0)
                         if(l[i][0]=="2" and pt1==0):
                             pt1=i
                         
                         if(len(l[i])==1):
-                            print(i,l[i])
+                            # print(i,l[i])
                             pt2=i
                             break
                     l.insert(pt1,subject)
@@ -518,6 +592,20 @@ def studRegistration(request):
                     stud = Student(user=student,role="student",section=section,year=year,username=username);
                     stud.save()
                     messages.success(request,"We Have Verified Your Request, Account Creation Successful!")
+
+
+                    emailid = os.environ.get("USER-NAME")
+                    password = os.environ.get("PASS")
+
+                    server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+                    server.starttls  # Enable TLS encryption
+                    server.login(emailid, password)
+                    subject = 'Success!!'
+                    content = f"Hi! {fname} you have been successfully registered!"
+                    message = "Subject: {}\n\n{}".format(subject,content)
+                    server.sendmail(emailid,email,message)
+                    server.quit()
+                    
                     return redirect("/")
                 
     return render(request, "studRegistration.html")
